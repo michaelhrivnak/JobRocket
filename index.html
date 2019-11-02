@@ -23,55 +23,62 @@
       </form>    
     </div>
   </nav>
-  <div id="jobSearch">
-    <input type="text" id="textbox" size="40" placeholder="Job Title">
-    <button id="jobtitle">Search</button>
-  </div>
+  
   <div class="row">
-      <div class="col-md-6">
-                  <div class="jobs">
-                      <h5>Job Title: Software Developer in Test </h5>
-                      <p>City: Toronto, ON  </p>
-                      <p>Salary: $110,000 a year </p>
-                      <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
-                  </div>
-              </br>
-                  <div class="jobs">
-                      <h5>Job Title: Software Developer in Test </h5>
-                      <p>City: Toronto, ON </p>
-                      <p>Salary: $110,000 a year </p>
-                      <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
-                  </div>
+    
+      <div id="jobListings" class="col-md-6">
+        <div id="jobSearch">
+          <input type="text" id="textbox" size="40" placeholder="Job Title">
+          <button id="jobtitle">Search</button>
+        </div>
+        <div class="jobs">
+            <h5>Job Title: Software Developer in Test </h5>
+            <p>City: Toronto, ON  </p>
+            <p>Salary: $110,000 a year </p>
+            <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
+        </div>
+        </br>
+        <div class="jobs">
+            <h5>Job Title: Software Developer in Test </h5>
+            <p>City: Toronto, ON </p>
+            <p>Salary: $110,000 a year </p>
+            <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
+        </div>
       </div>
-      <div class="col-md-6">
-          <div class="description">
-              <h5>Job Title: Software Developer in Test </h5>
-              <p>City: Toronto, ON </p>
-              <p>Salary: $110,000 a year </p>
-              <p>Description: Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul using nothing but the best products, patterns and practices! </p>
-              <p>Your Challenge:</p>
-              <ul>
-                  <li>Creating, executing, debugging and maintaining automation and manual test scripts</li>
-                  <li>Creating detailed, comprehensive and well-structured test cases</li>
-                  <li>Being an active participant in an Agile/Scrum environment</li>
-                  <li>Working closely with product managers and developers to understand and test new functionality</li>
-                  <li>Participating in peer code reviews</li>
-                  <li>Accountable for the quality and usability of the delivered product</li>
-                  <li>Performing functional, regression, and unit testing</li>
-                  <li>Driving continuous improvement in test coverage and test effectiveness</li>
-              </ul>
-          </div>
-      </br>
-          <div class="map">
-              <h5>BIG MAP MAAAAAAAAAAAAAAN</h5>
-          </div>
+      <div id="jobDetails" class="col-md-6">
+        <div class="description">
+          <h5>Job Title: Software Developer in Test </h5>
+          <p>City: Toronto, ON </p>
+          <p>Salary: $110,000 a year </p>
+          <p>Description: Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul using nothing but the best products, patterns and practices! </p>
+          <p>Your Challenge:</p>
+          <ul>
+            <li>Creating, executing, debugging and maintaining automation and manual test scripts</li>
+            <li>Creating detailed, comprehensive and well-structured test cases</li>
+            <li>Being an active participant in an Agile/Scrum environment</li>
+            <li>Working closely with product managers and developers to understand and test new functionality</li>
+            <li>Participating in peer code reviews</li>
+            <li>Accountable for the quality and usability of the delivered product</li>
+            <li>Performing functional, regression, and unit testing</li>
+            <li>Driving continuous improvement in test coverage and test effectiveness</li>
+          </ul>
+        </div>
+        </br>
+        <div id="map" class="map" style="float:left;width:70%;height:500px;"></div>
+        <div id="directionsPanel" style="float:right;width:30%;"></div>
       </div>
-  </div>
-  </div>  
-<footer>
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-      <a href="">JobRocket.com</a>
     </div>
-</footer>
+  </div>  
+  <footer>
+      <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="">JobRocket.com</a>
+      </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="./assets/js/helpers.js"></script>
+  <script src="./assets/js/maps.js"></script>
+  <script>
+   $(".jobs").on('click', function(){ var jobLoc = {CompanyName: "Space Database",city: "Toronto, Ontario"}; MapsAPI.initMap("90 Park Lawn Rd, Etobicoke",jobLoc)}); 
+  </script>
 </body>
 </html>
