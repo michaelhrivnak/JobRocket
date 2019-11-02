@@ -1,3 +1,14 @@
-#address {
-    float: right;
+#infoBtn {
+    margin-left: 250px;
+}
+
+#jobSearch {
+    margin-top: 25px;
+    margin-left: 120px;
+    margin-bottom: 10px;
+}
+
+.row {
+    padding-left: 50px;
+    padding-top: 10px;
 }
