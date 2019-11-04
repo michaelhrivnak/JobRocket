@@ -2,7 +2,9 @@ var apiKey = "AIzaSyDQPvq_u4sl2uDIIrqwih_kzAb-Y9Ib7sw"
 var map;  
 var directionsService;
 var directionsRenderer;
-var MapsAPI = {};    
+var MapsAPI = {};
+
+//create script tag to load google maps API
 var script = document.createElement("script");
 script.src = "https://maps.googleapis.com/maps/api/js?key="+apiKey+"&callback=resolve";
 $("body").append(script);    
@@ -40,8 +42,31 @@ function resolve(){
                 
                 if(status === 'OK'){
                     directionsRenderer.setDirections(result);
+                    console.log(result);
+                    let resultsForDirectionsPanel = {
+                        warnings: result.routes[0].warnings,
+                        steps: result.routes[0].legs[0].steps,
+                        stats:{
+                            arrivalTime: result.routes[0].legs[0].arrival_time.value,
+                            departureTime: result.routes[0].legs[0].depature_time.value,
+                            distance: result.routes[0].legs[0].distance.text,
+                            duration: result.routes[0].legs[0].duration.text
+                        },
+                        addresses:{
+                            start: results.routes[0].legs[0].start_address,
+                            end: results.routes[0].legs[0].end_address
+                        },
+                        copyright: results.routes[0].copyrights
+                    };
+                    setPanel(resultsForDirectionsPanel);
                 }
-            });      
+                 
+            }); 
+           
+        }
+
+        function setPanel(data){
+
         }
     
     
@@ -56,8 +81,11 @@ function resolve(){
                 directionsRenderer.setMap(map);
                 
                 addRoute(address,jobLocation.CompanyName+" "+jobLocation.city);
-            
-                directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+
+                
+                //directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+                         
+                
             }
         }        
     }();
