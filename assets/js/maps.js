@@ -5,9 +5,18 @@ var directionsRenderer;
 var MapsAPI = {};
 
 //create script tag to load google maps API
-var script = document.createElement("script");
-script.src = "https://maps.googleapis.com/maps/api/js?key="+apiKey+"&callback=resolve";
-$("body").append(script);    
+var scriptTag = document.createElement("script");
+
+var url = "https://maps.googleapis.com/maps/api/js?key="+apiKey;
+
+LoaderJS.urls = [url];
+LoaderJS.callbacks = [resolve];
+LoaderJS.locations = [scriptTag];
+LoaderJS.loadUrls();
+
+// script.src = "https://maps.googleapis.com/maps/api/js?key="+apiKey+"&callback=resolve";
+// script.type ="text/javascript";
+// $("body").append(script);    
 
 function resolve(){
     
@@ -30,7 +39,7 @@ function resolve(){
         
         }
           
-        function addRoute(origin,destination){
+        function addRoute(origin,destination,directionsElement){
             
             var request = {
                 origin: origin,
@@ -44,46 +53,68 @@ function resolve(){
                     directionsRenderer.setDirections(result);
                     console.log(result);
                     let resultsForDirectionsPanel = {
-                        warnings: result.routes[0].warnings,
-                        steps: result.routes[0].legs[0].steps,
+                        warningsArr: result.routes[0].warnings,
+                        stepsArr: result.routes[0].legs[0].steps,
                         stats:{
                             arrivalTime: result.routes[0].legs[0].arrival_time.value,
-                            departureTime: result.routes[0].legs[0].depature_time.value,
+                            departureTime: result.routes[0].legs[0].departure_time.value,
                             distance: result.routes[0].legs[0].distance.text,
                             duration: result.routes[0].legs[0].duration.text
                         },
                         addresses:{
-                            start: results.routes[0].legs[0].start_address,
-                            end: results.routes[0].legs[0].end_address
+                            start: result.routes[0].legs[0].start_address,
+                            end: result.routes[0].legs[0].end_address
                         },
-                        copyright: results.routes[0].copyrights
+                        copyright: result.routes[0].copyrights
                     };
-                    setPanel(resultsForDirectionsPanel);
+                    console.log(resultsForDirectionsPanel);
+                    setPanel(resultsForDirectionsPanel, directionsElement);
                 }
                  
             }); 
            
         }
+        //TODO: format the route data to be more compact (fit into the height of the map itself)
+        function setPanel(data, divToAttach){
+            $(divToAttach).empty();
+            let warningsDiv = $("<div>").attr("id","warnings");
+            data.warningsArr.forEach(element => {
+                warningsDiv.append($("<div>").addClass("warningEntry").text(element));
+            });
+            let routeStatsDiv = $("<div>").attr("id","routeStats");
+            routeStatsDiv.append($("<div>").text(moment(data.stats.departureTime).format("h:mm A") + " - " + moment(data.stats.arrivalTime).format("h:mm A")).addClass("routeText"),
+                              $("<div>").text("("+data.stats.duration+")").addClass("routeText"),
+                              $("<div>").text(data.stats.distance).addClass("routeText")  
+            );
+            console.log(routeStatsDiv);
+            let startAddressDiv = $("<div>").attr("id","startAddress").text(data.start);
+            let stepsDiv = $("<div>").attr("id","steps");
+            data.stepsArr.forEach(element => {
 
-        function setPanel(data){
+            });
+            let endAddressDiv = $("<div>").attr("id","startAddress").text(data.start);
+            let copyrightDiv = $("<div>").attr("id","copyright").text(data.copyright);
+
+            $(divToAttach).append(warningsDiv,routeStatsDiv,startAddressDiv, stepsDiv, endAddressDiv,copyrightDiv);
 
         }
     
     
         return {
-            initMap: function(address,jobLocation) {
+            initMap: function(address,jobLocation,mapElement, directionsElement) {
                 
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: 43.710801, lng: -79.392507},
-                    zoom: 11
-                });
-    
-                directionsRenderer.setMap(map);
+                if(map == null){
+                    map = new google.maps.Map(mapElement, {
+                        // center: {lat: 43.710801, lng: -79.392507},
+                        // zoom: 11
+                    });
+                    directionsRenderer.setMap(map);
+                }
                 
-                addRoute(address,jobLocation.CompanyName+" "+jobLocation.city);
+                addRoute(address,jobLocation.CompanyName+" "+jobLocation.city, directionsElement);
 
                 
-                //directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+                //directionsRenderer.setPanel(directionsElement);
                          
                 
             }
