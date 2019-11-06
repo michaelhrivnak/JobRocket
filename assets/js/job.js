@@ -1,19 +1,23 @@
-//<<<<<<< HEAD
 var apiKey = "95ee31820ec45dc8bd2ef7279ba150f4";
+var app_id = "e2d98a7c"
+var page = 1;
+var results_per_page = 20;
+var numPages;
 
 //returns an array of job results to be formatted by the front end
-function getJobs(stringJobTitle){
+function getJobs(stringJobTitle,page){
 
-
-    var queryURL = "http://api.adzuna.com/v1/api/jobs/ca/search/1?app_id=e2d98a7c&app_key="+apiKey+"&results_per_page=20&what="+stringJobTitle+"&content-type=application/json&where=toronto";
+    var queryURL = "http://api.adzuna.com/v1/api/jobs/ca/search/"+page+"?app_id="+app_id+"c&app_key="+apiKey+"&results_per_page="+results_per_page+"&what="+stringJobTitle+"&content-type=application/json&where=toronto";
     var siftedResults = [];
+    var totalResults;
     $.ajax({
         url: queryURL,
         method: "GET"        
     }).then(function(response) {
-        i = 0;
-        console.log(response.results.length);
-        console.log(response);
+        
+        totalResults = response.count;
+        numPages = Math.floor(totalResults/results_per_page);
+        console.log(totalResults);        
 
         response.results.forEach(element => {
 
@@ -23,14 +27,12 @@ function getJobs(stringJobTitle){
             
             if (salaryMin === salaryMax){
                 strSalary = salaryMin+"";
-            }
-            if (salaryMax > salaryMin){
+            }else if (salaryMax > salaryMin){
                 strSalary = salaryMin + "-" + salaryMax;
-            }
-            else {
+            }else {
                 strSalary = "N/A";
             }
-            console.log(strSalary)
+            //console.log(strSalary)
 
             
             //All of the info needed from the Adzuna API
@@ -49,7 +51,7 @@ function getJobs(stringJobTitle){
             
         });
         console.log(siftedResults);
-        return siftedResults;
+        return {results: siftedResults, totalResults: totalResults};
  
-});
+    });
 }
