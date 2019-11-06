@@ -3,15 +3,16 @@ var map;
 var directionsService;
 var directionsRenderer;
 var MapsAPI = {};
+var placesService;
 
 //create script tag to load google maps API
-var scriptTag = document.createElement("script");
-
-var url = "https://maps.googleapis.com/maps/api/js?key="+apiKey;
-
+var googleMapsScriptTag = document.createElement("script");
+//var placesScriptTag = document.createElement("script");
+var url = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/js?key="+apiKey+"&libraries=places";
+//var placesUrl = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/js?key="+apiKey+"&libraries=places"
 LoaderJS.urls = [url];
 LoaderJS.callbacks = [resolve];
-LoaderJS.locations = [scriptTag];
+LoaderJS.locations = [googleMapsScriptTag];
 LoaderJS.loadUrls();
 
 // script.src = "https://maps.googleapis.com/maps/api/js?key="+apiKey+"&callback=resolve";
@@ -22,6 +23,7 @@ function resolve(){
     
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
+    //placesService = new google.maps.places.PlacesService();
 
     MapsAPI = function(){   
 
@@ -98,7 +100,21 @@ function resolve(){
             $(divToAttach).append(warningsDiv,routeStatsDiv,startAddressDiv, stepsDiv, endAddressDiv,copyrightDiv);
 
         }
-    
+        function getGeocodeForJob(locationObj){
+            
+            var request = {
+                query: locationObj.CompanyName + " "+locationObj.city,
+                fields: ['geometry'],
+                locationBias: {radius: 200, center: {lat: locationObj.lat, lng: locationObj.lang}}
+              };
+
+           placesService.findPlaceFromQuery(request, function(results, status){
+               if (status === google.maps.places.PlacesServiceStatus.OK){
+                   return results;
+               }
+           });   
+
+        }
     
         return {
             initMap: function(address,jobLocation,mapElement, directionsElement) {
@@ -111,7 +127,9 @@ function resolve(){
                     directionsRenderer.setMap(map);
                 }
                 
-                addRoute(address,jobLocation.CompanyName+" "+jobLocation.city, directionsElement);
+                var geoCodedLocation = getGeocodeForJob(jobLocation);
+                console.log(geoCodedLocation);
+                //addRoute(address,jobLocation.CompanyName+" "+jobLocation.city, directionsElement);
 
                 
                 //directionsRenderer.setPanel(directionsElement);
