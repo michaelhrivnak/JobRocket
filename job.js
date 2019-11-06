@@ -39,17 +39,17 @@ $.ajax({
 
                     console.log(jobInfo)
 
-                            $("div .job-display")
-                                .append($("<div>").addClass("job-card")
+                            $("div .card")
+                                .append($("<div>").addClass("card-body")
                                     .on("click", function mapDisplay(){
                                         $("div .info-display")
                                             .append($("<div>").addClass("map-card"))
                                                 .append($("<p>").html("Latitude :" + response.results[i].latitude))
                                                     .append($("<p>").html("Longitude " +  response.results[i].longitude))})
-                                    .append($("<p>").html("Job Title: " + response.results[i].title))
-                                        .append($("<p>").html("Salary Range: " + response.results[i].salary_min + "-" + response.results[i].salary_max))
-                                            .append($("<p>").html("Job Description " + response.results[i].description))
-                                                .append($("<p>").html("City: " + response.results[i].location.display_name))
+                                    .append($("<p>").html("Job Title: " + response.results[i].title).addClass("card-title"))
+                                        .append($("<p>").html("Salary Range: " + response.results[i].salary_min + "-" + response.results[i].salary_max).addClass("card-text"))
+                                            .append($("<p>").html("Job Description " + response.results[i].description).addClass("card-text"))
+                                                .append($("<p>").html("City: " + response.results[i].location.display_name).addClass("card-text"))
                                                     .append($("<button>").text("Go to Job Ad")
                                                         .on("click", function goToAd(){ 
                                                             window.location = response.results[i].redirect_url}))

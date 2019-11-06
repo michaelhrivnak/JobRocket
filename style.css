@@ -4,10 +4,10 @@
 
 }
 
-.job-display {
+.display {
     float: left;
 }
-.job-card {
+.card-body {
     border: 2px solid #5a5959;
     width: 50%;
     padding: 2px 2px 2px 5px;
