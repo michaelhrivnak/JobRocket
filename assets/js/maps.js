@@ -22,8 +22,7 @@ LoaderJS.loadUrls();
 function resolve(){
     
     directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer();
-    //placesService = new google.maps.places.PlacesService();
+    directionsRenderer = new google.maps.DirectionsRenderer();   
 
     MapsAPI = function(){   
 
@@ -53,7 +52,7 @@ function resolve(){
                 
                 if(status === 'OK'){
                     directionsRenderer.setDirections(result);
-                    console.log(result);
+                    
                     let resultsForDirectionsPanel = {
                         warningsArr: result.routes[0].warnings,
                         stepsArr: result.routes[0].legs[0].steps,
@@ -69,7 +68,7 @@ function resolve(){
                         },
                         copyright: result.routes[0].copyrights
                     };
-                    console.log(resultsForDirectionsPanel);
+                    
                     setPanel(resultsForDirectionsPanel, directionsElement);
                 }
                  
@@ -88,19 +87,47 @@ function resolve(){
                               $("<div>").text("("+data.stats.duration+")").addClass("routeText"),
                               $("<div>").text(data.stats.distance).addClass("routeText")  
             );
-            console.log(routeStatsDiv);
-            let startAddressDiv = $("<div>").attr("id","startAddress").text(data.start);
+            console.log(data);
+            let startAddressDiv = $("<div>").attr("id","startAddress").text(data.addresses.start);
+            
             let stepsDiv = $("<div>").attr("id","steps");
-            data.stepsArr.forEach(element => {
-
-            });
-            let endAddressDiv = $("<div>").attr("id","startAddress").text(data.start);
+            console.log(data.stepsArr);
+            data.stepsArr.forEach(element => {                
+                stepsDiv.append($("<div>").addClass("step")
+                            .append($("<img>").attr("src",getTravelMode(element)).addClass("transitIcon"),
+                                    getTransitStyle(element),
+                                    $("<div>").text(element.distance.text),
+                                    $("<div>").text(element.duration.text),
+                                    $("<div>").text(element.instructions)
+                            ));
+            });         
+            
+            let endAddressDiv = $("<div>").attr("id","startAddress").text(data.addresses.end);
             let copyrightDiv = $("<div>").attr("id","copyright").text(data.copyright);
 
             $(divToAttach).append(warningsDiv,routeStatsDiv,startAddressDiv, stepsDiv, endAddressDiv,copyrightDiv);
 
         }
-        function getGeocodeForJob(locationObj){
+
+        function getTravelMode(step){
+            if (step.transit == undefined){
+                return "https://maps.gstatic.com/mapfiles/transit/iw2/6/walk.png";
+            }            
+            return step.transit.line.vehicle.icon
+
+        }
+
+        function getTransitStyle(step){
+            if (step.transit == undefined){
+                return null;
+            }
+            return $("<div>").text(step.transit.line.short_name)
+                             .css("backgroundColor",step.transit.line.color)
+                             .css("color",step.transit.line.text_color);
+
+        }
+
+        function getGeocodeForJob(addr,locationObj,directionsElement){
             
             var request = {
                 query: locationObj.CompanyName + " "+locationObj.city,
@@ -110,7 +137,8 @@ function resolve(){
 
            placesService.findPlaceFromQuery(request, function(results, status){
                if (status === google.maps.places.PlacesServiceStatus.OK){
-                   return results;
+                   
+                addRoute(addr, {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},directionsElement);
                }
            });   
 
@@ -124,14 +152,11 @@ function resolve(){
                         // center: {lat: 43.710801, lng: -79.392507},
                         // zoom: 11
                     });
-                    directionsRenderer.setMap(map);
+                    
                 }
-                
-                var geoCodedLocation = getGeocodeForJob(jobLocation);
-                console.log(geoCodedLocation);
-                //addRoute(address,jobLocation.CompanyName+" "+jobLocation.city, directionsElement);
-
-                
+                directionsRenderer.setMap(map);
+                placesService = new google.maps.places.PlacesService(map);
+                getGeocodeForJob(address,jobLocation,directionsElement); 
                 //directionsRenderer.setPanel(directionsElement);
                          
                 
