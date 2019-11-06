@@ -1,77 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
-  <title>Project 1 - Git Activity</title>
+  <title>Job Rocket</title>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="navbar">
     <a class="navbar-brand" href="index.html">Job Rocket</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">                   
       <form class="form-inline my-2 my-lg-0"> 
-      <input class="form-control mr-sm-2" type="search" placeholder="Enter Your Address" aria-label="Search" size="100" id="addressInput">
-      <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" id="search">Save</button>
-      <button type="button" id="infoBtn" class="btn btn-primary btn-sm">info</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter Your Address" aria-label="Search" size="100" id="addressInput">
+        <button class="btn btn-rounded btn-primary my-sm-0" type="submit" id="search">Save</button>
+        <button class="btn btn-rounded btn-primary my-sm-0" id="infoBtn" type="submit" id="search">Info</button>
       </form>    
     </div>
   </nav>
-  <div id="jobSearch">
-    <input type="text" id="textbox" size="40" placeholder="Job Title">
-    <button id="jobtitle">Search</button>
-  </div>
   <div class="row">
-      <div class="col-md-6">
-                  <div class="jobs">
-                      <h5>Job Title: Software Developer in Test </h5>
-                      <p>City: Toronto, ON  </p>
-                      <p>Salary: $110,000 a year </p>
-                      <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
-                  </div>
-              </br>
-                  <div class="jobs">
-                      <h5>Job Title: Software Developer in Test </h5>
-                      <p>City: Toronto, ON </p>
-                      <p>Salary: $110,000 a year </p>
-                      <p>Description:  Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul... </p>
-                  </div>
+    <div class="col-md-4">
+      <form class="form-inline md-form mr-auto mb-4" id="jobSearch">
+        <input class="form-control mr-sm-2" type="text" placeholder="Job Title" size="30" aria-label="Search">
+        <button class="btn btn-rounded btn-primary btn-sm my-0" type="submit">Search</button>
+      </form>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Web Developer</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Fakebook</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Toronto</h6>
+          <h6 class="card-subtitle mb-2">$10 - $12</h6>
+          <p>This is where the description of the company will go. This is where the description of the company will go.</p>
+          <a href="#" class="btn btn-primary btn-sm">Go to Job Link</a>
+        </div>
       </div>
-      <div class="col-md-6">
-          <div class="description">
-              <h5>Job Title: Software Developer in Test </h5>
-              <p>City: Toronto, ON </p>
-              <p>Salary: $110,000 a year </p>
-              <p>Description: Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul using nothing but the best products, patterns and practices! </p>
-              <p>Your Challenge:</p>
-              <ul>
-                  <li>Creating, executing, debugging and maintaining automation and manual test scripts</li>
-                  <li>Creating detailed, comprehensive and well-structured test cases</li>
-                  <li>Being an active participant in an Agile/Scrum environment</li>
-                  <li>Working closely with product managers and developers to understand and test new functionality</li>
-                  <li>Participating in peer code reviews</li>
-                  <li>Accountable for the quality and usability of the delivered product</li>
-                  <li>Performing functional, regression, and unit testing</li>
-                  <li>Driving continuous improvement in test coverage and test effectiveness</li>
-              </ul>
-          </div>
-      </br>
-          <div class="map">
-              <h5>BIG MAP MAAAAAAAAAAAAAAN</h5>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Web Developer</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Fakebook</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Toronto</h6>
+          <h6 class="card-subtitle mb-2">$10 - $12</h6>
+          <p>This is where the description of the company will go. This is where the description of the company will go.</p>
+          <a href="#" class="btn btn-primary btn-sm">Go to Job Link</a>
+        </div>
       </div>
-  </div>
-  </div>  
-<footer>
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-      <a href="">JobRocket.com</a>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Web Developer</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Fakebook</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Toronto</h6>
+          <h6 class="card-subtitle mb-2">$10 - $12</h6>
+          <p>This is where the description of the company will go. This is where the description of the company will go.</p>
+          <a href="#" class="btn btn-primary btn-sm">Go to Job Link</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Web Developer</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Fakebook</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Toronto</h6>
+          <h6 class="card-subtitle mb-2">$10 - $12</h6>
+          <p>This is where the description of the company will go. This is where the description of the company will go.</p>
+          <a href="#" class="btn btn-primary btn-sm">Go to Job Link</a>
+        </div>                                
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Web Developer</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Fakebook</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Toronto</h6>
+          <h6 class="card-subtitle mb-2">$10 - $12</h6>
+          <p>This is where the description of the company will go. This is where the description of the company will go.</p>
+          <a href="#" class="btn btn-primary btn-sm">Go to Job Link</a>
+        </div>                                
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
     </div>
-</footer>
+    <div class="col-md-6">
+      <div class="description" id="description">
+        <h5>Job Title: Software Developer in Test </h5>
+        <p>City: Toronto, ON </p>
+        <p>Salary: $110,000 a year </p>
+        <p>Description: Our client wants to hire software developers in test that are eager to have significant influence on a massive technology overhaul using nothing but the best products, patterns and practices!</p>
+        <p>Your Challenge:</p>
+        <ul>
+            <li>Creating, executing, debugging and maintaining automation and manual test scripts</li>
+            <li>Creating detailed, comprehensive and well-structured test cases</li>
+            <li>Being an active participant in an Agile/Scrum environment</li>
+            <li>Working closely with product managers and developers to understand and test new functionality</li>
+            <li>Participating in peer code reviews</li>
+            <li>Accountable for the quality and usability of the delivered product</li>
+            <li>Performing functional, regression, and unit testing</li>
+            <li>Driving continuous improvement in test coverage and test effectiveness</li>
+        </ul>
+        <div class="map">
+            <img src="assets/images/googlemap.png" width="800" height="500">
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
