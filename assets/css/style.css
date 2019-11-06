@@ -3,25 +3,38 @@ body {
     font-size: 14px;
 }
 
+#navbar {
+    margin-bottom: 100px;
+}
+
 #infoBtn {
     margin-left: 200px;
 }
 
 #jobSearch {
     margin-bottom: 10px;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .row {
     padding-left: 50px;
-    padding-top: 10px;
+    padding-top: 80px;
     padding-right: 50px;
+}
+
+#searchBar {
+    margin-left: 70px;
 }
 
 .card {
     margin-bottom: 10px;
 }
 
-/*.description {
+.pagination {
+    margin-top: 10px;
+    margin-left: 70px;
+}
+
+#description {
     position: fixed;
 }
