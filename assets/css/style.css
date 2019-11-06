@@ -1,6 +1,7 @@
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 14px;
+    overflow: hidden;
 }
 
 #navbar {
@@ -20,6 +21,7 @@ body {
     padding-left: 50px;
     padding-top: 80px;
     padding-right: 50px;
+    overflow: hidden;
 }
 
 #searchBar {
@@ -32,9 +34,18 @@ body {
 
 .pagination {
     margin-top: 10px;
-    margin-left: 70px;
+    margin-left: 80px;
 }
 
-#description {
-    position: fixed;
+#descriptionColumn {
+    position: absolute;
+    overflow-y: scroll;
+    margin-left: 500px;
+    height: 80%;
+}
+
+#cardColumn {
+    position: absolute;
+    overflow-y: scroll;
+    height: 80%;
 }
