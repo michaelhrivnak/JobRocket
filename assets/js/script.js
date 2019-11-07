@@ -72,7 +72,7 @@ function createFullJobPost(data){
     jobFullDescription.text(data[i].JobDescription);
 
     var cardBtn = $("<button>") //applying the button with the URL LINK
-    var jobUrlLink = $("<a>").attr("href",jobsArr[i].JobUrl);
+    var jobUrlLink = $("<a>").attr("href",data[i].JobUrl);
     cardBtn.append(jobUrlLink);
 
     var mapArea = $("<div>"); //creating a sibling DIV to populate the map under the jobDescription
