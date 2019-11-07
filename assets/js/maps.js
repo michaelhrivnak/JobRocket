@@ -26,6 +26,7 @@ function resolve(){
 
     MapsAPI = function(){   
 
+        //gets a moment for the next work day at 9am Used for arrival time.
         function getNextWorkDay(){        
             var tomorrow = moment().add(1, 'days');
             //if saturday or sunday
@@ -39,6 +40,7 @@ function resolve(){
             }
         
         }
+        //Removes the Province and postal code from results for better formatting.
         function trimAddress(address){
             let addr = address.split(",");
             let result = [];
@@ -146,20 +148,48 @@ function resolve(){
 
         function getGeocodeForJob(addr,locationObj,directionsElement){
             
-            var request = {
-                query: locationObj.CompanyName + " "+locationObj.City,
-                fields: ['geometry'],
-                locationBias: {radius: 200, center: {lat: locationObj.Lat, lng: locationObj.Long}}
-              };
-
+            var request;
+            console.log(locationObj);
+            //check to see if we don't have coords but do have a company and city
+            if((locationObj.Lat == undefined || locationObj.Long == undefined) && locationObj.CompanyName != null && locationObj.City != null){
+                request = {
+                    query: locationObj.CompanyName + " "+locationObj.City,
+                    fields: ['geometry']                    
+                  };
+            //we have a latlng      
+            }else if (locationObj.Lat != null && locationObj.Long != null){
+                request = {
+                    query: locationObj.CompanyName + " "+locationObj.City,
+                    fields: ['geometry'],
+                    locationBias: {radius: 200, center: {lat: locationObj.Lat, lng: locationObj.Long}}
+                  };
+            //we have nothing so load the default map and return.    
+            }else{
+                console.log("No Location Data");
+                map.setCenter( {lat: 43.710801, lng: -79.392507}); 
+                map.setZoom(11);                   
+                
+                $(directionsElement).empty();
+                $(directionsElement).html("<h6>Directions for this Job Posting could not be found</h6>");
+                return
+            }
+            
            placesService.findPlaceFromQuery(request, function(results, status){
-                console.log("geocode request: ",request)
-                console.log("geocode status: ", status)
+                console.log("geocode request: ",request);
+                console.log("geocode status: ", status);
                 if (status === google.maps.places.PlacesServiceStatus.OK){
                    
                     addRoute(addr, {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},directionsElement);
-                }else if(status === "ZERO_RESULTS") {
+                //if no results but there is a latlng, just use that.
+                }else if(status === "ZERO_RESULTS" && (locationObj.Lat != null)) {
                     addRoute(addr,{lat: locationObj.Lat,lng: locationObj.Long},directionsElement);
+                }else{
+                    //set to center on toronto, display message
+                    map.setCenter( {lat: 43.710801, lng: -79.392507}); 
+                    map.setZoom(11);                   
+                    
+                    $(directionsElement).empty();
+                    $(directionsElement).html("<h6>Directions for this Job Posting could not be found</h6>");
                 }
            });   
 
@@ -177,6 +207,7 @@ function resolve(){
                     
                 // }
                 map = new google.maps.Map(mapElement, {
+                    mapTypeControl: false
                     // center: {lat: 43.710801, lng: -79.392507},
                     // zoom: 11
                 });                
