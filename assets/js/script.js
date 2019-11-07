@@ -1,12 +1,10 @@
-
 var jobsDiv = $("#jobs");
 var SavedAddress;
 var currentPage;
 var currentJob;
-var fulljobsDiv = $("#fullJobs");
+var fullJobsDiv = $("#fullJob");
 
 $("#search").on("click",function(){
-    console.log("hi");
     event.preventDefault();
     currentPage = 1;
     currentJob = $("#jobTitle").val().trim();
@@ -26,8 +24,6 @@ function init(){
 }
 
 init();
-
-console.log($("#search"));
 
 function displayJobs(jobsObj){
     jobsDiv.empty();
@@ -121,50 +117,45 @@ function displayJobs(jobsObj){
 }
 
 function createFullJobPost(data){
-
-    var jobDes= $("<div>"); //job desctiion
-    jobDes.addClass("jobsDes");
-    jobDes.attr("data-job", JSON.stringify(data[i]));
+    fullJobsDiv.empty();
+    if(SavedAddress == null){
+        fullJobsDiv.html("<h3>Please enter your home address and click on the job you wish to see again!</h3>")
+        return;
+    }
 
     var jobFullBody = $("<div>"); //body of the job description
     jobFullBody.addClass("job-body");
 
-    var jobFullTitle = $("<h5>"); //basic job title
+    var jobFullTitle = $("<h2>"); //basic job title
     jobFullTitle.addClass("job-title");
-    jobFullTitle.text(data[i].JobTitle);
+    jobFullTitle.html(data.JobTitle);
 
-    var jobFullLocation = $("<p>"); //basic location of the job
-    jobFullLocation.addClass("job-subtitle");
-    jobFullLocation.text(data[i].JobMapInfo.City);
-
-    var jobFullCompanyName = $("<p>");//basic company name
+    var jobFullCompanyName = $("<h3>");//basic company name
     jobFullCompanyName.addClass("job-subtitle");
-    jobFullCompanyName.text(data[i].JobMapInfo.CompanyName);
+    jobFullCompanyName.html(data.JobMapInfo.CompanyName);
+
+    var jobFullLocation = $("<h3>"); //basic location of the job
+    jobFullLocation.addClass("job-subtitle");
+    jobFullLocation.html("Location: "+data.JobMapInfo.City);  
+    
+    var jobSalary = $("<h5>"); // Salary
+    jobSalary.addClass("card-subtitle mb-2");
+    jobSalary.html("Expected Salary: " + data.StrSalary);  
 
     var jobFullDescription = $("<p>");//full job description
     jobFullDescription.addClass("jobDescription");
-    jobFullDescription.text(data[i].JobDescription);
+    jobFullDescription.html("Description:" + data.JobDescription);
 
-    var cardBtn = $("<button>") //applying the button with the URL LINK
-    var jobUrlLink = $("<a>").attr("href",jobsArr[i].JobUrl);
-    cardBtn.append(jobUrlLink);
-
-    var mapArea = $("<div>"); //creating a sibling DIV to populate the map under the jobDescription
-    mapArea.addClass("mapContainer"); //finish code to API call
-
-
-    var map = $("<div>"); //generating a map based on the API call
-    map.addClass("mapImg"); //finish code to API call 
-
-
-    var directionsPanel = $("<div>"); //generating directions based on the API call
-    directionsPanel.addClass("mapDirections");
+    var jobBtn = $("<button>").text("Go to full job posting") //applying the button with the URL LINK
+    var jobUrlLink = $("<a>").attr("href",data.JobUrl);
+    jobBtn.append(jobUrlLink);
     
-
-    jobDes.append(jobFullBody.append(
-        jobFullTitle, jobFullLocation, jobFullCompanyName, jobFullDescription, mapArea, map, directionsPanel
-    ))
+    fullJobsDiv.append(jobFullBody.append(
+        jobFullTitle,  jobFullCompanyName, jobFullLocation, jobSalary, jobFullDescription,jobBtn
+    ));
     
-    fullJobsDiv.append(jobDes);
+    console.log(data);
+    //call the map API to do its thing
+    MapsAPI.initMap(SavedAddress,data.JobMapInfo,document.getElementById("map"),document.getElementById("directionsPanel"));
     
 }

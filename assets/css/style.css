@@ -62,11 +62,21 @@ body {
     height: 80%;
 }
 #map{
+    width: 70%;
+    padding:0;
+    margin: 10px 0;
+    float:left;
+    height:100%;
 
+}
+#mapContainer{
+    width: 100%;
 }
 #directionsPanel{
     font: size 14px;
-        
+    width: 30%;
+    padding:0;
+    margin: 10px 0;        
 }
 #directionsPanel > *{
     border: 1px solid grey;

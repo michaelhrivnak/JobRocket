@@ -17,7 +17,7 @@ function getJobs(stringJobTitle,page,callback){
         
         totalResults = response.count;
         numPages = Math.ceil(totalResults/results_per_page);
-        console.log(totalResults, response);        
+        //console.log(totalResults, response);        
 
         response.results.forEach(element => {
 
@@ -53,7 +53,7 @@ function getJobs(stringJobTitle,page,callback){
             siftedResults.push(jobInfo);
             
         });
-        console.log(siftedResults);
+        //console.log(siftedResults);
         callback({results: siftedResults, totalResults: totalResults, pages: numPages});
         // return {results: siftedResults, totalResults: totalResults};
  
