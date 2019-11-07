@@ -13,7 +13,8 @@ $("#search").on("click",function(){
 
 $("#save").on("click",function(){
     event.preventDefault();
-    localStorage.setItem("SavedAddress",JSON.stringify($("#addressInput").val().trim()));
+    SavedAddress = $("#addressInput").val().trim();
+    localStorage.setItem("SavedAddress",JSON.stringify(SavedAddress));
 });
 
 function init(){
