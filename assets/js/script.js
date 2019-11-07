@@ -3,6 +3,7 @@ var jobsDiv = $("#jobs");
 var SavedAddress;
 var currentPage;
 var currentJob;
+var fulljobsDiv = $("#fullJobs");
 
 $("#search").on("click",function(){
     console.log("hi");
@@ -120,11 +121,50 @@ function displayJobs(jobsObj){
 }
 
 function createFullJobPost(data){
-    //make div that looks like:
-    //<div id="mapArea"> 
-    //    <div id="map"></div>
-    //    <div id="directionsPanel"></div>
-    //</div>
 
-    //MapsAPI.initMap(SavedAddress,jobLocation,document.getElementById("map"), document.getElementById("directionsPanel"))
+    var jobDes= $("<div>"); //job desctiion
+    jobDes.addClass("jobsDes");
+    jobDes.attr("data-job", JSON.stringify(data[i]));
+
+    var jobFullBody = $("<div>"); //body of the job description
+    jobFullBody.addClass("job-body");
+
+    var jobFullTitle = $("<h5>"); //basic job title
+    jobFullTitle.addClass("job-title");
+    jobFullTitle.text(data[i].JobTitle);
+
+    var jobFullLocation = $("<p>"); //basic location of the job
+    jobFullLocation.addClass("job-subtitle");
+    jobFullLocation.text(data[i].JobMapInfo.City);
+
+    var jobFullCompanyName = $("<p>");//basic company name
+    jobFullCompanyName.addClass("job-subtitle");
+    jobFullCompanyName.text(data[i].JobMapInfo.CompanyName);
+
+    var jobFullDescription = $("<p>");//full job description
+    jobFullDescription.addClass("jobDescription");
+    jobFullDescription.text(data[i].JobDescription);
+
+    var cardBtn = $("<button>") //applying the button with the URL LINK
+    var jobUrlLink = $("<a>").attr("href",jobsArr[i].JobUrl);
+    cardBtn.append(jobUrlLink);
+
+    var mapArea = $("<div>"); //creating a sibling DIV to populate the map under the jobDescription
+    mapArea.addClass("mapContainer"); //finish code to API call
+
+
+    var map = $("<div>"); //generating a map based on the API call
+    map.addClass("mapImg"); //finish code to API call 
+
+
+    var directionsPanel = $("<div>"); //generating directions based on the API call
+    directionsPanel.addClass("mapDirections");
+    
+
+    jobDes.append(jobFullBody.append(
+        jobFullTitle, jobFullLocation, jobFullCompanyName, jobFullDescription, mapArea, map, directionsPanel
+    ))
+    
+    fullJobsDiv.append(jobDes);
+    
 }
