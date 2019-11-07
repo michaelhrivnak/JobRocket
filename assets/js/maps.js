@@ -164,7 +164,7 @@ function resolve(){
         return {
             initMap: function(address,jobLocation,mapElement, directionsElement) {
                 
-                console.log(address,jobLocation,mapElement,directionsElement);
+               
                 // if(map == null){
                 //     map = new google.maps.Map(mapElement, {
                 //         center: {lat: 43.710801, lng: -79.392507},
@@ -173,15 +173,14 @@ function resolve(){
                     
                 // }
                 map = new google.maps.Map(mapElement, {
-                    center: {lat: 43.710801, lng: -79.392507},
-                    zoom: 11
-                });
-                console.log(map);
-                
+                    // center: {lat: 43.710801, lng: -79.392507},
+                    // zoom: 11
+                });                
+                google.maps.event.trigger(map, 'resize');
                 directionsRenderer.setMap(map);
                 placesService = new google.maps.places.PlacesService(map);
                 getGeocodeForJob(address,jobLocation,directionsElement); 
-                directionsRenderer.setPanel(directionsElement);
+               // directionsRenderer.setPanel(directionsElement);
                          
                 
             }

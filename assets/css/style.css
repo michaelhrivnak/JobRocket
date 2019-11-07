@@ -7,11 +7,12 @@
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 14px;
-    overflow: hidden;
+    
 }
 
 #navbar {
-    margin-bottom: 100px;
+    z-index: 10;
+    position: fixed;
 }
 
 .btn.btn-primary{
@@ -31,10 +32,11 @@ body {
 }
 
 .row {
-    padding-left: 50px;
+    /* padding-left: 50px;
     padding-top: 80px;
-    padding-right: 50px;
-    overflow: hidden;
+    padding-right: 50px; */
+    margin:0;
+    /* overflow: hidden; */
 }
 
 #searchBar {
@@ -47,36 +49,39 @@ body {
 
 .pagination {
     justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #descriptionColumn {
-    position: absolute;
-    overflow-y: scroll;
-    margin-left: 500px;
-    height: 80%;
+    
 }
 
 #cardColumn {
-    position: absolute;
+    position: fixed;
     overflow-y: scroll;
-    height: 80%;
+    padding: 10px;       
 }
 #map{
     width: 70%;
     padding:0;
     margin: 10px 0;
     float:left;
-    height:100%;
+    height:500px;
+    overflow:hidden;
+    /* position:unset !important; */
 
 }
 #mapContainer{
-    width: 100%;
+    width: inherit;
+    position:relative;
 }
 #directionsPanel{
     font: size 14px;
     width: 30%;
     padding:0;
-    margin: 10px 0;        
+    margin: 10px 0;
+    float:right;        
 }
 #directionsPanel > *{
     border: 1px solid grey;

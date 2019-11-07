@@ -23,6 +23,15 @@ function init(){
     }
 }
 
+$("#descriptionColumn").css("margin-left",$("#cardColumn").css("width")).css("top",$("#navbar").outerHeight(true));
+
+$(window).on('resize',function(){
+    $("#descriptionColumn").css("margin-left",$("#cardColumn").css("width"));   
+});
+
+$("#cardColumn").css("height",$(document).innerHeight() - $("#navbar").outerHeight(true)).css("top",$("#navbar").outerHeight(true));
+
+
 init();
 
 function displayJobs(jobsObj){
@@ -80,11 +89,11 @@ function displayJobs(jobsObj){
     }
     //TODO: deal with large numbers of pages
     if (pages > 1){
-        let pageNav = $("<nav>").css("text-align","center");
+        let pageNav = $("<nav>").addClass("pageNav").css("text-align","center");
         let ul = $("<ul>").addClass("pagination");
         ul.append($("<li>").addClass("page-item")
             .append($("<div>").addClass("page-link").text("Previous").on('click',function(){
-            
+            console.log("prev");
             if(currentPage == 1){
                 return;
             }
@@ -96,6 +105,7 @@ function displayJobs(jobsObj){
             ul.append($("<li>").addClass("page-item")
                 .append($("<div>").addClass("page-link").text(i).on('click',function(){
                 currentPage = i;
+                console.log("i");
                 getJobs(currentJob,currentPage,displayJobs);
             })));
         }
@@ -106,12 +116,13 @@ function displayJobs(jobsObj){
                 return;
             }
             currentPage++;
-
+            console.log("next");
             getJobs(currentJob,currentPage,displayJobs);
         })));
+        pageNav.append(ul);
         
-        jobsDiv.append(pageNav.append(ul));
-        jobsDiv.prepend(pageNav.append(ul));
+        jobsDiv.append(pageNav.clone(true));
+        jobsDiv.prepend(pageNav.clone(true));
     }
     jobsDiv.prepend($("<h5>").attr("id","resultsCount").css("text-align","center").text(totalResults+" jobs found. (Page "+currentPage+" of " +pages+")" ));
 }
