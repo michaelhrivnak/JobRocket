@@ -1,7 +1,7 @@
 var adzunaApiKey = "95ee31820ec45dc8bd2ef7279ba150f4";
 var app_id = "e2d98a7c"
 var page = 1;
-var results_per_page = 3;
+var results_per_page = 20;
 var numPages;
 
 //returns an array of job results to be formatted by the front end
