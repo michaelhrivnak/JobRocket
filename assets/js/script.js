@@ -41,7 +41,7 @@ function displayJobs(jobsObj){
     
     let totalResults = jobsObj.totalResults;
     if (totalResults == 0){
-        jobsDiv.append($("h5").text("Sorry, no results found, please use another search term"));
+        jobsDiv.append($("h5").addClass("textWrapper").text("Sorry, no results found, please use another search term"));
         return;
     }
     let pages = jobsObj.pages;
@@ -125,13 +125,13 @@ function displayJobs(jobsObj){
         jobsDiv.append(pageNav.clone(true));
         jobsDiv.prepend(pageNav.clone(true));
     }
-    jobsDiv.prepend($("<h5>").attr("id","resultsCount").css("text-align","center").text(totalResults+" jobs found. (Page "+currentPage+" of " +pages+")" ));
+    jobsDiv.prepend($("<h5>").attr("id","resultsCount").addClass("textWrapper").text(totalResults+" jobs found. (Page "+currentPage+" of " +pages+")" ));
 }
 
 function createFullJobPost(data){
     fullJobsDiv.empty();
     if(SavedAddress == null){
-        fullJobsDiv.html("<h3>Please enter your home address and click on the job you wish to see again!</h3>")
+        fullJobsDiv.html("<h3>Please enter your home address and click on the job you wish to see again!</h3>").addClass("textWrapper")
         return;
     }
 

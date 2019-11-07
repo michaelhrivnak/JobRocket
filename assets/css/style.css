@@ -7,12 +7,14 @@
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 14px;
+    color: #575757;
     
 }
 
 #navbar {
     z-index: 10;
     position: fixed;
+    background-color: #8e187c;
 }
 
 .btn.btn-primary{
@@ -54,13 +56,48 @@ body {
 }
 
 #descriptionColumn {
-    
+   /* background-image: url("../images/JobRocket_CityScape-01.svg");
+   background-repeat: repeat-y;
+   background-size:cover; */
+   
 }
+body::after {
+    content: "";
+    background: url("../images/JobRocket_CityScape-01.svg");
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+    background-size:cover;  
+    background-attachment: fixed; 
+  }
 
 #cardColumn {
     position: fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 10px;       
+}
+.card:hover{
+    cursor: pointer;
+    box-shadow: 0 0 6px 6px rgba(239,65,61,0.8);
+    border: 1px solid rgba(239,65,61,0.8);
+}
+.job-body{
+    background-color: white;
+    border-radius:3px;
+    padding: 5px;
+    margin-top:5px;
+}
+.textWrapper{
+    text-align: center;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ced4da;
+    
 }
 #map{
     width: 70%;
@@ -81,7 +118,8 @@ body {
     width: 30%;
     padding:0;
     margin: 10px 0;
-    float:right;        
+    float:right;   
+    background-color:white;     
 }
 #directionsPanel > *{
     border: 1px solid grey;
