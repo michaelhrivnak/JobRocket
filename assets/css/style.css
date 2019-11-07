@@ -130,6 +130,7 @@ body::after {
 }
 #routeStats{    
     display: flex;
+    flex-wrap: wrap;
 }
 #warnings{
     background-color:rgb(243, 243, 180)

@@ -65,6 +65,7 @@ function resolve(){
                 if(status === 'OK'){
                     directionsRenderer.setDirections(result);
                     console.log(result);
+                    //sift through our resluts to get the releveant data
                     let resultsForDirectionsPanel = {
                         warningsArr: result.routes[0].warnings,
                         stepsArr: result.routes[0].legs[0].steps,
