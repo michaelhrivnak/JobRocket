@@ -81,6 +81,7 @@ function displayJobs(jobsObj){
         
         jobsDiv.append(cardDiv);
     }
+    //TODO: deal with large numbers of pages
     if (pages > 1){
         let pageNav = $("<nav>").css("text-align","center");
         let ul = $("<ul>").addClass("pagination");

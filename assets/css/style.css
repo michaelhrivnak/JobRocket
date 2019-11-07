@@ -84,6 +84,9 @@ body {
 .warningEntry{
     
 }
+.page-item:hover{
+    cursor: pointer;
+}
 .routeText{
     margin-right:5px;
 }
