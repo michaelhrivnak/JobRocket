@@ -7,17 +7,15 @@ var placesService;
 
 //create script tag to load google maps API
 var googleMapsScriptTag = document.createElement("script");
-//var placesScriptTag = document.createElement("script");
+
 var url = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/js?key="+apiKey+"&libraries=places";
-//var placesUrl = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/js?key="+apiKey+"&libraries=places"
+
+//Loader JS - loads the contents of an external script into a script tag
 LoaderJS.urls = [url];
 LoaderJS.callbacks = [resolve];
 LoaderJS.locations = [googleMapsScriptTag];
 LoaderJS.loadUrls();
-
-// script.src = "https://maps.googleapis.com/maps/api/js?key="+apiKey+"&callback=resolve";
-// script.type ="text/javascript";
-// $("body").append(script);    
+   
 
 function resolve(){
     
