@@ -61,7 +61,7 @@ function resolve(){
                 transitOptions: {arrivalTime: new Date(getNextWorkDay()*1000)}
             };
             directionsService.route(request, function(result, status){
-                
+                console.log(status);
                 if(status === 'OK'){
                     directionsRenderer.setDirections(result);
                     console.log(result);
@@ -147,16 +147,20 @@ function resolve(){
         function getGeocodeForJob(addr,locationObj,directionsElement){
             
             var request = {
-                query: locationObj.CompanyName + " "+locationObj.city,
+                query: locationObj.CompanyName + " "+locationObj.City,
                 fields: ['geometry'],
                 locationBias: {radius: 200, center: {lat: locationObj.Lat, lng: locationObj.Long}}
               };
 
            placesService.findPlaceFromQuery(request, function(results, status){
-               if (status === google.maps.places.PlacesServiceStatus.OK){
+                console.log("geocode request: ",request)
+                console.log("geocode status: ", status)
+                if (status === google.maps.places.PlacesServiceStatus.OK){
                    
-                addRoute(addr, {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},directionsElement);
-               }
+                    addRoute(addr, {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},directionsElement);
+                }else if(status === "ZERO_RESULTS") {
+                    addRoute(addr,{lat: locationObj.Lat,lng: locationObj.Long},directionsElement);
+                }
            });   
 
         }
