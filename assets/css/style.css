@@ -1,3 +1,9 @@
+/* colors:
+#8e187c
+#ef413d
+#F7a19a */
+
+
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 14px;
@@ -8,13 +14,20 @@ body {
     margin-bottom: 100px;
 }
 
+.btn.btn-primary{
+    background-color: #ef413d;
+    border-color: #F7a19a;
+}
+
 #infoBtn {
     margin-left: 200px;
 }
-
+#navbarSupportedContent{
+    justify-content: space-between;
+}
 #jobSearch {
     margin-bottom: 10px;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 
 .row {
@@ -33,8 +46,7 @@ body {
 }
 
 .pagination {
-    margin-top: 10px;
-    margin-left: 80px;
+    justify-content: center;
 }
 
 #descriptionColumn {
@@ -48,4 +60,78 @@ body {
     position: absolute;
     overflow-y: scroll;
     height: 80%;
+}
+#map{
+
+}
+#directionsPanel{
+    font: size 14px;
+        
+}
+#directionsPanel > *{
+    border: 1px solid grey;
+    
+}
+#directionsPanel *:not(:first-child){
+    border-top: none;
+}
+#routeStats{    
+    display: flex;
+}
+#warnings{
+    background-color:rgb(243, 243, 180)
+}
+.warningEntry{
+    
+}
+.routeText{
+    margin-right:5px;
+}
+.transitIcon{
+    height: 25px;
+}
+.locIcon{
+    height: 25px;
+}
+#startAddress{
+    display:flex;
+}
+#steps{
+
+}
+.btn-primary > a{
+    color: white !important;
+}
+.route-address{
+    display:flex;
+}
+.step{
+    display:flex;    
+    flex-wrap:wrap;
+    align-content: center;
+    align-items:center;
+
+}
+.step > *{
+    display:flex;
+    margin-right: 5px;    
+}
+.distance{
+
+}
+.duration{
+    color: rgb(156, 152, 152);
+
+}
+.transit{
+    padding: 0 10px;
+}
+.instructions{
+    flex-basis:100%;
+}
+#endAddress{
+    display:flex;
+}
+#copyright{
+    
 }

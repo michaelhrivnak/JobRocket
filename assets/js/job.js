@@ -1,13 +1,13 @@
-var apiKey = "95ee31820ec45dc8bd2ef7279ba150f4";
+var adzunaApiKey = "95ee31820ec45dc8bd2ef7279ba150f4";
 var app_id = "e2d98a7c"
 var page = 1;
 var results_per_page = 20;
 var numPages;
 
 //returns an array of job results to be formatted by the front end
-function getJobs(stringJobTitle,page){
+function getJobs(stringJobTitle,page,callback){
 
-    var queryURL = "http://api.adzuna.com/v1/api/jobs/ca/search/"+page+"?app_id="+app_id+"c&app_key="+apiKey+"&results_per_page="+results_per_page+"&what="+stringJobTitle+"&content-type=application/json&where=toronto";
+    var queryURL = "https://api.adzuna.com/v1/api/jobs/ca/search/"+page+"?app_id="+app_id+"&app_key="+adzunaApiKey+"&results_per_page="+results_per_page+"&what="+stringJobTitle+"&content-type=application/json&where=toronto";
     var siftedResults = [];
     var totalResults;
     $.ajax({
@@ -17,7 +17,7 @@ function getJobs(stringJobTitle,page){
         
         totalResults = response.count;
         numPages = Math.ceil(totalResults/results_per_page);
-        console.log(totalResults);        
+        console.log(totalResults, response);        
 
         response.results.forEach(element => {
 
@@ -25,10 +25,12 @@ function getJobs(stringJobTitle,page){
             var salaryMax = element.salary_max;
             let strSalary = "";
             
-            if (salaryMin === salaryMax){
-                strSalary = salaryMin+"";
+            
+
+            if ((salaryMin > 0 && salaryMax > 0) && ( salaryMin == salaryMax)){
+                strSalary = "$"+salaryMin;
             }else if (salaryMax > salaryMin){
-                strSalary = salaryMin + "-" + salaryMax;
+                strSalary = "$"+salaryMin + " - $" + salaryMax;
             }else {
                 strSalary = "N/A";
             }
@@ -39,6 +41,7 @@ function getJobs(stringJobTitle,page){
             let jobInfo = {
                 JobTitle: element.title,
                 StrSalary: strSalary,
+                JobDescriptionShort: element.description.substring(0,150)+"...",
                 JobDescription: element.description,
                 JobUrl: element.redirect_url,
                 JobContract: element.contract_time,
@@ -51,7 +54,8 @@ function getJobs(stringJobTitle,page){
             
         });
         console.log(siftedResults);
-        return {results: siftedResults, totalResults: totalResults};
+        callback({results: siftedResults, totalResults: totalResults, pages: numPages});
+        // return {results: siftedResults, totalResults: totalResults};
  
     });
 }
