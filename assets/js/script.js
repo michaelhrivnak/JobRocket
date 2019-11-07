@@ -151,15 +151,15 @@ function createFullJobPost(data){
     
     var jobSalary = $("<h5>"); // Salary
     jobSalary.addClass("card-subtitle mb-2");
-    jobSalary.html("Expected Salary: " + data.StrSalary);  
+    jobSalary.html("<b>Expected Salary: </b>" + data.StrSalary);  
 
     var jobFullDescription = $("<p>");//full job description
     jobFullDescription.addClass("jobDescription");
-    jobFullDescription.html("Description:" + data.JobDescription);
+    jobFullDescription.html("<b>Description:</b> " + data.JobDescription);
 
-    var jobBtn = $("<button>").text("Go to full job posting") //applying the button with the URL LINK
-    var jobUrlLink = $("<a>").attr("href",data.JobUrl);
-    jobBtn.append(jobUrlLink);
+    //applying the button with the URL LINK
+    var jobBtn  = $("<a>").addClass("btn btn-rounded btn-primary my-sm-0").attr("href",data.JobUrl).attr("target","_blank").text("Go to full job posting");
+    
     
     fullJobsDiv.append(jobFullBody.append(
         jobFullTitle,  jobFullCompanyName, jobFullLocation, jobSalary, jobFullDescription,jobBtn
