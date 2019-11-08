@@ -60,6 +60,7 @@ function resolve(){
                 travelMode: "TRANSIT",
                 transitOptions: {arrivalTime: new Date(getNextWorkDay()*1000)}
             };
+            
             directionsService.route(request, function(result, status){
                 console.log(status);
                 if(status === 'OK'){

@@ -16,17 +16,18 @@ function getJobs(stringJobTitle,page,callback){
     }).then(function(response) {
         
         totalResults = response.count;
+        //calculate the number of pages we need
         numPages = Math.ceil(totalResults/results_per_page);
         console.log(totalResults, response);        
 
+        //sift through each result and pull out what we need
         response.results.forEach(element => {
 
             var salaryMin = element.salary_min;
             var salaryMax = element.salary_max;
             let strSalary = "";
-            
-            
-
+                        
+            //scrub our salary data
             if ((salaryMin > 0 && salaryMax > 0) && ( salaryMin == salaryMax)){
                 strSalary = "$"+salaryMin;
             }else if (salaryMax > salaryMin){
