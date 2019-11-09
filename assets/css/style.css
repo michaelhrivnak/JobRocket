@@ -1,27 +1,44 @@
+/* colors:
+#8e187c
+#ef413d
+#F7a19a */
+
+
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 14px;
-    overflow: hidden;
+    color: #575757;
+    
 }
 
 #navbar {
-    margin-bottom: 100px;
+    z-index: 10;
+    position: fixed;
+    background-color: #8e187c;
+}
+
+.btn.btn-primary{
+    background-color: #ef413d;
+    border-color: #F7a19a;
 }
 
 #infoBtn {
     margin-left: 200px;
 }
-
+#navbarSupportedContent{
+    justify-content: space-between;
+}
 #jobSearch {
     margin-bottom: 10px;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 
 .row {
-    padding-left: 50px;
+    /* padding-left: 50px;
     padding-top: 80px;
-    padding-right: 50px;
-    overflow: hidden;
+    padding-right: 50px; */
+    margin:0;
+    /* overflow: hidden; */
 }
 
 #searchBar {
@@ -33,19 +50,145 @@ body {
 }
 
 .pagination {
-    margin-top: 10px;
-    margin-left: 80px;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #descriptionColumn {
-    position: absolute;
-    overflow-y: scroll;
-    margin-left: 500px;
-    height: 80%;
+   /* background-image: url("../images/JobRocket_CityScape-01.svg");
+   background-repeat: repeat-y;
+   background-size:cover; */
+   
 }
+body::after {
+    content: "";
+    background: url("../images/JobRocket_CityScape-01.svg");
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+    background-size:cover;  
+    background-attachment: fixed; 
+  }
 
 #cardColumn {
-    position: absolute;
-    overflow-y: scroll;
-    height: 80%;
+    position: fixed;
+    overflow-y: auto;
+    padding: 10px;       
+}
+.card:hover{
+    cursor: pointer;
+    box-shadow: 0 0 6px 6px rgba(239,65,61,0.8);
+    border: 1px solid rgba(239,65,61,0.8);
+}
+.job-body{
+    background-color: white;
+    border-radius:3px;
+    padding: 5px;
+    margin-top:5px;
+}
+.textWrapper{
+    text-align: center;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ced4da;
+    
+}
+#map{
+    width: 70%;
+    padding:0;
+    margin: 10px 0;
+    float:left;
+    height:500px;
+    overflow:hidden;
+    /* position:unset !important; */
+
+}
+#mapContainer{
+    width: inherit;
+    position:relative;
+}
+#directionsPanel{
+    font: size 14px;
+    width: 30%;
+    padding:0;
+    margin: 10px 0;
+    float:right;   
+    background-color:white;     
+}
+#directionsPanel > *{
+    border: 1px solid grey;
+    
+}
+#directionsPanel *:not(:first-child){
+    border-top: none;
+}
+#routeStats{    
+    display: flex;
+    flex-wrap: wrap;
+}
+#warnings{
+    background-color:rgb(243, 243, 180)
+}
+.warningEntry{
+    
+}
+.page-item:hover{
+    cursor: pointer;
+}
+.routeText{
+    margin-right:5px;
+}
+.transitIcon{
+    height: 25px;
+}
+.locIcon{
+    height: 25px;
+}
+#startAddress{
+    display:flex;
+}
+#steps{
+
+}
+.btn-primary > a{
+    color: white !important;
+}
+.route-address{
+    display:flex;
+}
+.step{
+    display:flex;    
+    flex-wrap:wrap;
+    align-content: center;
+    align-items:center;
+
+}
+.step > *{
+    display:flex;
+    margin-right: 5px;    
+}
+.distance{
+
+}
+.duration{
+    color: rgb(156, 152, 152);
+
+}
+.transit{
+    padding: 0 10px;
+}
+.instructions{
+    flex-basis:100%;
+}
+#endAddress{
+    display:flex;
+}
+#copyright{
+    
 }
