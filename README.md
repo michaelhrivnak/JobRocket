@@ -1,16 +1,16 @@
 # UTBootcampProject1
 Job Rocket
 
-Summary:
+## Summary
 Job Rocket is a Job Board page created for job seekers looking for the perfect profession that is within a feasible travelling distance from their home. 
 
-Job Rocket: 
+## Job Rocket
 
 For most job seekers, distance is always a factor when choosing a job. This becomes a greater challenge when the job seeker does not know where the job is located. The job seeker must then take extra measures to locate and plan the routes to arrive the job. All these extra steps are inconvenient to the job seeker, but Job Rocket has implemented a fix for that.
 
 Job rocket provides the knowledge of distance and the required routes to take to arrive within a timely manner. Understanding the distance from home to work provides the job seeker a chance to properly plan out their day and arrive their destination stress free. 
 
-Functionality
+## Functionality
 
 Job Rocket is simple and easy to use, here are the steps:
 <ul>
@@ -23,7 +23,7 @@ After the last step, multiple pages and postings will be generated. The job seek
 
 
 
-License
+## License
 
 MIT License
 
