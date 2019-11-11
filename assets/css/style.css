@@ -102,9 +102,9 @@ body::after {
 #map{
     width: 70%;
     padding:0;
-    margin: 10px 0;
+    /* margin: 10px 0; */
     float:left;
-    height:500px;
+    /* height:500px; */
     overflow:hidden;
     /* position:unset !important; */
 
@@ -115,11 +115,14 @@ body::after {
 }
 #directionsPanel{
     font: size 14px;
-    width: 30%;
+    /* width: 30%; */
     padding:0;
-    margin: 10px 0;
+    /* margin: 10px 0; */
     float:right;   
-    background-color:white;     
+    background-color:white;
+    position:fixed;
+    overflow-y:scroll;
+    /* left:70%;      */
 }
 #directionsPanel > *{
     border: 1px solid grey;
@@ -134,6 +137,9 @@ body::after {
 }
 #warnings{
     background-color:rgb(243, 243, 180)
+}
+#fullJob{
+    margin-bottom:10px;
 }
 .warningEntry{
     

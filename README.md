@@ -22,7 +22,7 @@ Job Rocket is simple and easy to use, here are the steps:
 
 After the last step, multiple pages and postings will be generated. The job seeker then can browse and choose whichever they would like to apply to. Once they've clicked one of the postings, full information of the job will be generated along with the map that provides the routes to get to that job. 
 
-![Job Rocket Image](/assets/images/JobRocket.png)
+![Job Rocket Image](/assets/images/JobRocketReadme.png)
 
 ## Credits
 

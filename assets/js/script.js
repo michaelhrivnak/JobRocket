@@ -36,6 +36,15 @@ $("#cardColumn").css("height",$(document).innerHeight() - $("#navbar").outerHeig
 $(window).on('resize',function(){
     $("#descriptionColumn").css("margin-left",$("#cardColumn").css("width"));   
     $("#cardColumn").css("height",$(document).innerHeight() - $("#navbar").outerHeight(true)).css("top",$("#navbar").outerHeight(true));
+
+    if($("#directionsPanel")){
+        $("#map").css("height",$(window).innerHeight() 
+        - $("#navbar").outerHeight(true)-fullJobsDiv.outerHeight(true)-10);
+        $("#directionsPanel").height($("#map").height())
+                        .css("marginLeft",$("#map").width())
+                        .width($("#descriptionColumn").innerWidth(true)-$("#map").width());
+    }
+
 });
 
 init();
@@ -172,25 +181,8 @@ function createFullJobPost(data){
     jobFullDescription.addClass("jobDescription");
     jobFullDescription.html("<b>Description:</b> " + data.JobDescription);
 
-<<<<<<< HEAD
-    var cardBtn = $("<button>") //applying the button with the URL LINK
-    var jobUrlLink = $("<a>").attr("href",data[i].JobUrl);
-    cardBtn.append(jobUrlLink);
-
-    var mapArea = $("<div>"); //creating a sibling DIV to populate the map under the jobDescription
-    mapArea.addClass("mapContainer"); //finish code to API call
-
-
-    var map = $("<div>"); //generating a map based on the API call
-    map.addClass("mapImg"); //finish code to API call 
-
-
-    var directionsPanel = $("<div>"); //generating directions based on the API call
-    directionsPanel.addClass("mapDirections");
-=======
     //applying the button with the URL LINK
     var jobBtn  = $("<a>").addClass("btn btn-rounded btn-primary my-sm-0").attr("href",data.JobUrl).attr("target","_blank").text("Go to full job posting");
->>>>>>> master
     
     //put everything together
     fullJobsDiv.append(jobFullBody.append(
@@ -199,6 +191,13 @@ function createFullJobPost(data){
     
     console.log(data);
     //call the map API to do its thing
+    
+    $("#map").css("height",$(window).innerHeight() 
+    - $("#navbar").outerHeight(true)-fullJobsDiv.outerHeight(true)-10);
+    $("#directionsPanel").height($("#map").height())
+                        .css("marginLeft",$("#map").width())
+                        .width($("#descriptionColumn").innerWidth(true)-$("#map").width());    
+    
     MapsAPI.initMap(SavedAddress,data.JobMapInfo,document.getElementById("map"),document.getElementById("directionsPanel"));
     
 }
