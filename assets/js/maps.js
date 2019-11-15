@@ -62,10 +62,10 @@ function resolve(){
             };
             
             directionsService.route(request, function(result, status){
-                console.log(status);
+                
                 if(status === 'OK'){
                     directionsRenderer.setDirections(result);
-                    console.log(result);
+                    
                     //sift through our resluts to get the releveant data
                     let resultsForDirectionsPanel = {
                         warningsArr: result.routes[0].warnings,
@@ -149,7 +149,7 @@ function resolve(){
         function getGeocodeForJob(addr,locationObj,directionsElement){
             
             var request;
-            console.log(locationObj);
+            
             //check to see if we don't have coords but do have a company and city
             if((locationObj.Lat == undefined || locationObj.Long == undefined) && locationObj.CompanyName != null && locationObj.City != null){
                 request = {
@@ -175,8 +175,8 @@ function resolve(){
             }
             
            placesService.findPlaceFromQuery(request, function(results, status){
-                console.log("geocode request: ",request);
-                console.log("geocode status: ", status);
+                // console.log("geocode request: ",request);
+                // console.log("geocode status: ", status);
                 if (status === google.maps.places.PlacesServiceStatus.OK){
                    
                     addRoute(addr, {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},directionsElement);

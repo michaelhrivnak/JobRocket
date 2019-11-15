@@ -18,7 +18,7 @@ function getJobs(stringJobTitle,page,callback){
         totalResults = response.count;
         //calculate the number of pages we need
         numPages = Math.ceil(totalResults/results_per_page);
-        console.log(totalResults, response);        
+        //console.log(totalResults, response);        
 
         //sift through each result and pull out what we need
         response.results.forEach(element => {

@@ -3,6 +3,7 @@ var SavedAddress;
 var currentPage;
 var currentJob;
 var fullJobsDiv = $("#fullJob");
+var maxDisplayPages = 7;
 
 //search for jobs button
 $("#search").on("click",function(){
@@ -54,15 +55,15 @@ function displayJobs(jobsObj){
     jobsDiv.empty();
 
     //get array of jobs
-    let jobsArr = jobsObj.results;
+    var jobsArr = jobsObj.results;
     
-    let totalResults = jobsObj.totalResults;
+    var totalResults = jobsObj.totalResults;
     //display no results message and end out of our function
     if (totalResults == 0){
         jobsDiv.append($("h5").addClass("textWrapper").text("Sorry, no results found, please use another search term"));
         return;
     }
-    let pages = jobsObj.pages;
+    var pages = jobsObj.pages;
 
     //build out job cards
     for (var i = 0; i < jobsArr.length;i++){
@@ -108,43 +109,51 @@ function displayJobs(jobsObj){
     }
     //TODO: deal with large numbers of pages
     if (pages > 1){
-        let pageNav = $("<nav>").addClass("pageNav").css("text-align","center");
-        let ul = $("<ul>").addClass("pagination");
-        ul.append($("<li>").addClass("page-item")
-            .append($("<div>").addClass("page-link").text("Previous").on('click',function(){
-            console.log("prev");
-            if(currentPage == 1){
-                return;
-            }
-            currentPage--;
+        var pageNav = $("<nav>").addClass("pageNav").css("text-align","center");
+        var ul = $("<ul>").addClass("pagination");
+       
+        var pageNumberArray = getPageNumbers(pages);
+        console.log(pageNumberArray);
 
-            getJobs(currentJob,currentPage,displayJobs);
-        })));
-        for (let i = 1; i <= pages; i++){
+        for(var i = 0; i < pageNumberArray.length;i++){
+            var pageObj = pageNumberArray[i];
+            console.log(pageObj,currentPage);
             ul.append($("<li>").addClass("page-item")
-                .append($("<div>").addClass("page-link").text(i).on('click',function(){
-                currentPage = i;
-                console.log("i");
+                .append($("<div>").addClass("page-link page-num-"+pageObj.text).text(pageObj.text).on('click',function(){
+                
+                console.log($(this),currentPage,pageObj.value,pages);
+                if((currentPage == 1 && (pageObj.value == -1 || pageObj.value == -pages)) &&
+                (currentPage == pages && (pageObj.value == 1 || pageObj.value == pages))){
+                    return;
+                }
+                if(typeof pageObj.text != "number"){
+                    currentPage += pageObj.value;
+                }else{
+                    currentPage = pageObj.value;
+                }
+                
+                if(currentPage >= pages){
+                    currentPage = pages;
+                }else if(currentPage <= 1){
+                    currentPage = 1;
+                }
+
                 getJobs(currentJob,currentPage,displayJobs);
-            })));
+            }))); 
         }
-        ul.append($("<li>").addClass("page-item")
-            .append($("<div>").addClass("page-link").text("Next").on('click',function(){
-            
-            if(currentPage == pages){
-                return;
-            }
-            currentPage++;
-            console.log("next");
-            getJobs(currentJob,currentPage,displayJobs);
-        })));
+
+        
         pageNav.append(ul);
         
         //add one at the top and one at the bottom
         jobsDiv.append(pageNav.clone(true));
         jobsDiv.prepend(pageNav.clone(true));
+        
     }
-
+    $(document).ready(function(){
+        $(".page-link").removeClass("active");
+        $(".page-num-"+currentPage).addClass("active");
+    });
     jobsDiv.prepend($("<h5>").attr("id","resultsCount").addClass("textWrapper").text(totalResults+" jobs found. (Page "+currentPage+" of " +pages+")" ));
 }
 
@@ -189,7 +198,6 @@ function createFullJobPost(data){
         jobFullTitle,  jobFullCompanyName, jobFullLocation, jobSalary, jobFullDescription,jobBtn
     ));
     
-    console.log(data);
     //call the map API to do its thing
     
     $("#map").css("height",$(window).innerHeight() 
@@ -200,4 +208,40 @@ function createFullJobPost(data){
     
     MapsAPI.initMap(SavedAddress,data.JobMapInfo,document.getElementById("map"),document.getElementById("directionsPanel"));
     
+}
+
+
+function getPageNumbers(pages){
+    var result = [];
+    if(pages <= maxDisplayPages){
+        result.push({text:"<",value:-1});
+        for(var i=1;i <= pages;i++){
+            result.push({text:i,value:i});
+        }
+        result.push({text:">",value:1});
+    }else{
+        if(currentPage <= maxDisplayPages - Math.floor(maxDisplayPages/2)){
+            for(var i=1;i <= maxDisplayPages;i++){
+                result.push({text:i,value:i});
+            }
+            result.push({text:">",value:1});
+            result.push({text:">>",value:pages});
+        }else if(currentPage >= pages-maxDisplayPages+Math.floor(maxDisplayPages/2)){
+            result.push({text:"<<",value:-pages});
+            result.push({text:"<",value:-1});
+            for(var i=pages-maxDisplayPages;i <= pages;i++){
+                result.push({text:i,value:i});
+            }
+        }else{
+            result.push({text:"<<",value:-pages});
+            result.push({text:"<",value:-1});
+            for(var i=currentPage-Math.floor(maxDisplayPages/2); i <= currentPage+Math.floor(maxDisplayPages/2) ;i++){
+                result.push({text:i,value:i});
+            }
+            result.push({text:">",value:1});
+            result.push({text:">>",value:pages});
+        }    
+    }
+
+    return result;
 }
