@@ -107,40 +107,39 @@ function displayJobs(jobsObj){
         //add it to the list
         jobsDiv.append(cardDiv);
     }
-    //TODO: deal with large numbers of pages
+    //if we have any number of pages, make page buttons
     if (pages > 1){
         var pageNav = $("<nav>").addClass("pageNav").css("text-align","center");
         var ul = $("<ul>").addClass("pagination");
        
+        //get our button array
         var pageNumberArray = getPageNumbers(pages);
-        console.log(pageNumberArray);
+        //console.log(pageNumberArray);
 
+        //building the page buttons
         for(var i = 0; i < pageNumberArray.length;i++){
-            var pageObj = pageNumberArray[i];
-            console.log(pageObj,currentPage);
-            ul.append($("<li>").addClass("page-item")
-                .append($("<div>").addClass("page-link page-num-"+pageObj.text).text(pageObj.text).on('click',function(){
-                
-                console.log($(this),currentPage,pageObj.value,pages);
-                if((currentPage == 1 && (pageObj.value == -1 || pageObj.value == -pages)) &&
-                (currentPage == pages && (pageObj.value == 1 || pageObj.value == pages))){
-                    return;
-                }
-                if(typeof pageObj.text != "number"){
-                    currentPage += pageObj.value;
-                }else{
-                    currentPage = pageObj.value;
-                }
-                
-                if(currentPage >= pages){
-                    currentPage = pages;
-                }else if(currentPage <= 1){
-                    currentPage = 1;
-                }
-
-                getJobs(currentJob,currentPage,displayJobs);
-            }))); 
+            var pageObj = { text: pageNumberArray[i].text, value: pageNumberArray[i].value };             
+            var pageBtn = $("<li>").addClass("page-item")
+                .append($("<div>").addClass("page-link page-num-" + pageObj.text)
+                    .text(pageObj.text)
+                    .click({ pageObj: pageObj, pages: pages }, goToPage)
+                );
+            
+            ul.append(pageBtn);
         }
+        
+        //ES6 version of the button building
+        //pageNumberArray.forEach(element => {
+        //    console.log("hi");
+        //    var pageBtn = $("<li>").addClass("page-item")
+        //        .append($("<div>").addClass("page-link page-num-" + element.text)
+        //            .text(element.text).on('click', function () {
+        //                goToPage(element, pages);
+
+        //            }));
+        //    console.log(pageBtn.children());
+        //    ul.append(pageBtn);
+        //});
 
         
         pageNav.append(ul);
@@ -155,6 +154,32 @@ function displayJobs(jobsObj){
         $(".page-num-"+currentPage).addClass("active");
     });
     jobsDiv.prepend($("<h5>").attr("id","resultsCount").addClass("textWrapper").text(totalResults+" jobs found. (Page "+currentPage+" of " +pages+")" ));
+}
+
+//function to determing which page to go to after clicking a button
+function goToPage(event) {
+    
+    var pageTextAndValue = event.data.pageObj;
+    var numPages = event.data.pages;
+    //making sure we don't do anything if we don't need to
+    if ((currentPage == 1 && (pageTextAndValue.value == -1 || pageTextAndValue.value == -numPages)) ||
+        (currentPage == numPages && (pageTextAndValue.value == 1 || pageTextAndValue.value == numPages)) ||
+        (currentPage == pageTextAndValue.text)) {
+        return;
+    }
+    if (typeof pageTextAndValue.text != "number") {
+        currentPage += pageTextAndValue.value;
+    } else {
+        currentPage = pageTextAndValue.value;
+    }
+    //dealing with over/under flow
+    if (currentPage >= numPages) {
+        currentPage = numPages;
+    } else if (currentPage <= 1) {
+        currentPage = 1;
+    }
+
+    getJobs(currentJob, currentPage, displayJobs);
 }
 
 //build the full description and call map functions
@@ -209,33 +234,37 @@ function createFullJobPost(data){
     MapsAPI.initMap(SavedAddress,data.JobMapInfo,document.getElementById("map"),document.getElementById("directionsPanel"));
     
 }
-
-
+//function to determine what page number buttons to display in the form of an array of text & value objects
 function getPageNumbers(pages){
     var result = [];
+    //if we can display all of the pages, do that
     if(pages <= maxDisplayPages){
         result.push({text:"<",value:-1});
         for(var i=1;i <= pages;i++){
             result.push({text:i,value:i});
         }
         result.push({text:">",value:1});
+    //otherwise...
     }else{
+        //if it is in the first n-n/2 numbers, show n with next and last
         if(currentPage <= maxDisplayPages - Math.floor(maxDisplayPages/2)){
             for(var i=1;i <= maxDisplayPages;i++){
                 result.push({text:i,value:i});
             }
             result.push({text:">",value:1});
             result.push({text:">>",value:pages});
+        //if its in the last n-n/2 numbers, show the last n numbers with previous and first    
         }else if(currentPage >= pages-maxDisplayPages+Math.floor(maxDisplayPages/2)){
             result.push({text:"<<",value:-pages});
             result.push({text:"<",value:-1});
             for(var i=pages-maxDisplayPages;i <= pages;i++){
                 result.push({text:i,value:i});
             }
+        //otherwise show the surrounding n-2 numbers with first, previous, next and last
         }else{
             result.push({text:"<<",value:-pages});
             result.push({text:"<",value:-1});
-            for(var i=currentPage-Math.floor(maxDisplayPages/2); i <= currentPage+Math.floor(maxDisplayPages/2) ;i++){
+            for(var i=currentPage-Math.floor(maxDisplayPages/2)+1; i <= currentPage+Math.floor(maxDisplayPages/2)-1 ;i++){
                 result.push({text:i,value:i});
             }
             result.push({text:">",value:1});
