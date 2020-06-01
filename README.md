@@ -13,6 +13,10 @@ Job rocket provides the knowledge of distance and the required routes to take to
 
 This is a web app so no installation required
 
+## Deployment
+
+https://michaelhrivnak.github.io/JobRocket/
+
 ## Usage
 
 Job Rocket is simple and easy to use, here are the steps:
